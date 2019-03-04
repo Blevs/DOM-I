@@ -1,26 +1,25 @@
-function numPlace(num, place) {
+function getDigit(num, place) {
     return ~~(num % Math.pow(10, 1 + place) / Math.pow(10, place));
 }
 
-function setDigits(ms) {
-    document.getElementById("msTens").textContent = numPlace(ms, 1);
-    document.getElementById("msHundreds").textContent = numPlace(ms, 2);
-    document.getElementById("secondOnes").textContent = numPlace(ms, 3);
-    document.getElementById("secondTens").textContent = numPlace(ms, 4);
-}
-
-function makeTimer(startms, stepms, stopms) {
+function makeTimer(startms, stepms, stopms, digitsobj) {
     let ms = startms;
     let step = stepms;
     let stop = stopms;
-    return function() {
+    let digits = Object.entries(digitsobj);
+    function setDigits(ms) {
+        digits.forEach(function([id, digit]) {
+            document.getElementById(id).textContent = getDigit(ms, digit);
+        });
+    }
+    setInterval(function() {
         ms += step;
         if (ms === stop) {
-            document.querySelectorAll(".digit").forEach(e => e.style.color = "red");
+            digits.forEach(([id, _]) => document.getElementById(id).style.color = "red");
             step = 0;
         }
         setDigits(ms);
-    };
+    }, Math.abs(stepms));
 }
 
-let timerIntervId = setInterval(makeTimer(0, 10, 10000), 10);
+let timer = makeTimer(0, 10, 10000, {"msTens": 1, "msHundreds": 2, "secondOnes": 3, "secondTens": 4});
