@@ -93,3 +93,6 @@ document.querySelector('.cta-text button').onclick = function() {
     let h1 = document.querySelector('.cta-text h1');
     h1.textContent = h1.textContent + "!";
 };
+
+// Stretch style
+document.querySelector('.cta-text').style['max-width'] = "100%";
