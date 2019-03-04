@@ -87,3 +87,9 @@ document.getElementsByTagName('nav')[0].prepend(first);
 document.getElementsByTagName('nav')[0].appendChild(last);
 
 document.querySelectorAll('nav a').forEach(a => a.style.color = "green");
+
+// Stretch button
+document.querySelector('.cta-text button').onclick = function() {
+    let h1 = document.querySelector('.cta-text h1');
+    h1.textContent = h1.textContent + "!";
+};
