@@ -73,3 +73,17 @@ document.querySelectorAll('.contact *').forEach((e, idx) => e.textContent = cont
 // footer
 document.querySelector('footer p').textContent = siteContent["footer"]["copyright"];
 
+// Add new content
+const first = document.createElement("a");
+first.href = "#";
+first.textContent = "First";
+
+const last = document.createElement("a");
+last.href = "#";
+last.textContent = "Last";
+
+document.getElementsByTagName('nav')[0].prepend(first);
+
+document.getElementsByTagName('nav')[0].appendChild(last);
+
+document.querySelectorAll('nav a').forEach(a => a.style.color = "green");
