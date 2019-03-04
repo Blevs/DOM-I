@@ -39,4 +39,37 @@ const siteContent = {
 
 // Example: Update the img src for the logo
 let logo = document.getElementById("logo-img");
-logo.setAttribute('src', siteContent["nav"]["img-src"])
+logo.setAttribute('src', siteContent["nav"]["img-src"]);
+
+// Assign data
+
+// Nav items
+Array.from(document.getElementsByTagName("nav")[0].childNodes)
+    .filter(e => e.tagName === 'A')
+    .forEach((a, idx) => a.textContent = siteContent["nav"][`nav-item-${1 + idx}`]);
+
+// cta
+document.querySelector('.cta-text h1').textContent = siteContent["cta"]["h1"];
+document.querySelector('.cta-text button').textContent = siteContent["cta"]["button"];
+document.getElementById("cta-img").setAttribute('src', siteContent["cta"]["img-src"]);
+
+// main content
+const mainh4s = Object.entries(siteContent["main-content"])
+    .filter(([key, _]) => key.match(/-h4$/g))
+    .map(e => e[1]);
+
+const maintext = Object.entries(siteContent["main-content"])
+    .filter(([key, _]) => key.match(/-content$/g))
+    .map(e => e[1]);
+
+document.querySelectorAll('.main-content h4').forEach((h4, idx) => h4.textContent = mainh4s[idx]);
+document.querySelectorAll('.main-content p').forEach((p, idx) => p.textContent = maintext[idx]);
+document.getElementById("middle-img").src = siteContent["main-content"]["middle-img-src"];
+
+// contact
+const contact = Object.entries(siteContent["contact"]).map(e => e[1]);
+document.querySelectorAll('.contact *').forEach((e, idx) => e.textContent = contact[idx]);
+
+// footer
+document.querySelector('footer p').textContent = siteContent["footer"]["copyright"];
+
