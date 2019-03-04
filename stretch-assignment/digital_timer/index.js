@@ -2,24 +2,23 @@ function getDigit(num, place) {
     return ~~(num % Math.pow(10, 1 + place) / Math.pow(10, place));
 }
 
-function makeTimer(startms, stepms, stopms, digitsobj) {
-    let ms = startms;
-    let step = stepms;
-    let stop = stopms;
-    let digits = Object.entries(digitsobj);
+function makeTimer(start, step, stop, digitsobj) {
+    let ms = start;
+    let digits = Object.entries(digitsobj).map(([id, digit]) => [document.getElementById(id), digit]);
     function setDigits(ms) {
-        digits.forEach(function([id, digit]) {
-            document.getElementById(id).textContent = getDigit(ms, digit);
+        digits.forEach(function([elem, digit]) {
+            elem.textContent = getDigit(ms, digit);
         });
     }
-    setInterval(function() {
+    let timer = setInterval(function() {
         ms += step;
         if (ms === stop) {
-            digits.forEach(([id, _]) => document.getElementById(id).style.color = "red");
-            step = 0;
+            digits.forEach((pair) => pair[0].style.color = "red");
+            clearInterval(timer);
         }
         setDigits(ms);
-    }, Math.abs(stepms));
+    }, Math.abs(step));
+    return timer;
 }
 
-let timer = makeTimer(0, 10, 10000, {"msTens": 1, "msHundreds": 2, "secondOnes": 3, "secondTens": 4});
+window.onload = () => makeTimer(10000, -10, 0, {"msTens": 1, "msHundreds": 2, "secondOnes": 3, "secondTens": 4});
